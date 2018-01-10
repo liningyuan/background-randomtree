@@ -5,7 +5,7 @@ var myrand=(function(){
 	var i1=613;
 	return function(){return (i1=((i1*613123+233333)&2147483647))*0.0000000004656612873077392578125;}
 })();
-Math.random=myrand;
+if(debuging||false)Math.random=myrand;
 
 var cv=document.createElement('canvas');
 cv.width=window.innerWidth;
@@ -291,7 +291,7 @@ var timestamp=0;
 function update(){
 	if(stopped)return;
 	++timestamp;
-	if(timestamp&63)return requestAnimationFrame(update);
+	if(timestamp&31)return requestAnimationFrame(update);
 	if(debuging)console.log(edglist);
 	cv.width=window.innerWidth;
 	cv.height=window.innerHeight;
