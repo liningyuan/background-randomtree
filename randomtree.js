@@ -18,16 +18,27 @@ var edge=new Int32Array(1);
 var edglist=[];
 var linked=new Int32Array(1);
 var bcj=new Int32Array(1);
-var init=function(){
+function init(){
 	cv.height=window.innerHeight;
 	cv.width=window.innerWidth;
 	var i1=0,i2=0,i3=-998244353,i4=window.innerHeight/window.innerWidth;
-	for(i1=16;i1<=32;++i1){
-		i2=((i4*i1)|0)/i1;
-		// console.log(i1,i4,i2,i3);
-		if(i2>i3){
-			n=Math.round(i4*i1)+1;m=i1+1;
-			i3=i2;
+	if(i4<0.4||i4>2.5){
+		for(i1=2;i1<=24;++i1){
+			for(i2=2;i2<=24;++i2){
+				if((i2/i1<=i4)&&(i2/i1>i3)){
+					i3=i2/i1;
+					m=i1;n=i2;
+				}
+			}
+		}
+	}else{
+		for(i1=8;i1<=20;++i1){
+			for(i2=8;i2<=20;++i2){
+				if((i2/i1<=i4)&&(i2/i1>i3)){
+					i3=i2/i1;
+					m=i1;n=i2;
+				}
+			}
 		}
 	}
 	edge=new Int32Array(n*m);
@@ -286,6 +297,14 @@ function drawcanvas(){
 	return;
 }
 drawcanvas();
+window.onresize=function(){
+	var i1=(window.innerHeight*m)/(n*window.innerWidth);
+	if(i1>=0.9&&i1<=1.1){
+		cv.width=window.innerWidth;
+		cv.height=window.innerHeight;
+	}else init();
+	return;
+}
 var stopped=false;
 var timestamp=0;
 function update(){
